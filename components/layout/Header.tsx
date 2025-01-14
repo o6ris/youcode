@@ -4,28 +4,14 @@ import { SiteConfig } from '@/lib/site-config';
 import Link from 'next/link';
 import { ThemeToggle } from '../ThemeToggle';
 import { Typography } from '../ui/Typography';
-import { Button } from '../ui/button';
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '../ui/dropdown-menu';
 import { useSession, signIn, signOut } from "next-auth/react";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar"
-import LoginButton from '@/components/features/LoginButton';
+import AuthButton from '@/components/features/AuthButton';
 
 
 export function Header() {
   const { data: session, status } = useSession()
   console.log("session", session, status)
 
-  const loggerToggle = () => {
-    if (status === "authenticated") {
-      signOut()
-    } else {
-      signIn()
-    }
-  }
   return (
     <header className="bg-background sticky top-0 z-40 w-full border-b">
       <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
@@ -38,7 +24,7 @@ export function Header() {
 
         <div className="flex flex-1 items-center justify-end space-x-4">
           <nav className="flex items-center space-x-1">
-            <LoginButton user={session?.user} status={status} loggerToggle={loggerToggle} />
+            <AuthButton status={status} user={session?.user} />
             <ThemeToggle />
           </nav>
         </div>
