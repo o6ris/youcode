@@ -15,6 +15,7 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "@/components/ui/avatar"
+import EditUser from '@/components/custom/EditUser'
 
 interface UserAccountProps {
   user?: Session["user"];
@@ -35,7 +36,7 @@ function UserAccount({ user }: UserAccountProps) {
           <p>{user?.email}</p>
         </CardDescription>
         <CardFooter className='flex flex-row justify-betwwen p-0 gap-4'>
-          <Button className='w-full'>Edit profile</Button>
+          <EditUser user={user} triggerButtonClass={'w-full'} />
           <Button onClick={() => signOut()} className='w-full bg-red-600'>Log out</Button>
         </CardFooter>
       </CardContent>
