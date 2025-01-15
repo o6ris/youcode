@@ -1,8 +1,15 @@
 import React from 'react'
+import { getAuthSession } from '@/lib/auth'
+import UserAccount from '@/components/custom/UserAccount'
 
-function Account() {
+async function Account() {
+  const session = await getAuthSession();
+  const user = session?.user
+
   return (
-    <div>Account</div>
+    <div>
+      <UserAccount user={user} />
+    </div>
   )
 }
 

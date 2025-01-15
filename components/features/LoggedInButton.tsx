@@ -33,7 +33,7 @@ function LoggedInButton({ user }: LoggedInButtonProps) {
           </DropdownMenuItem>
           <AlertDialogTrigger>
             <DropdownMenuItem>
-              <Button>Log Out</Button>
+              Log out
             </DropdownMenuItem>
           </AlertDialogTrigger>
         </DropdownMenuContent>
