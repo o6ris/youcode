@@ -9,6 +9,7 @@ import {
   AvatarImage,
 } from "@/components/ui/avatar"
 import { Button } from '../ui/button';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger, AlertDialogFooter } from '../ui/alert-dialog';
 
 interface LoggedInButtonProps {
   user?: Session["user"];
@@ -18,17 +19,30 @@ function LoggedInButton({ user }: LoggedInButtonProps) {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Avatar>
-          <AvatarImage src={user?.image ?? ""} alt={user?.name ?? ""} />
-          <AvatarFallback>{user?.name?.slice(0, 1)}</AvatarFallback>
-        </Avatar>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <DropdownMenuItem onClick={() => signOut()}>
-          sign Out
-        </DropdownMenuItem>
-      </DropdownMenuContent>
+      <AlertDialog>
+        <DropdownMenuTrigger asChild>
+          <Avatar>
+            <AvatarImage src={user?.image ?? ""} alt={user?.name ?? ""} />
+            <AvatarFallback>{user?.name?.slice(0, 1)}</AvatarFallback>
+          </Avatar>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <AlertDialogTrigger>
+            <DropdownMenuItem>
+              <Button>Log Out</Button>
+            </DropdownMenuItem>
+          </AlertDialogTrigger>
+        </DropdownMenuContent>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure you want to log out ?</AlertDialogTitle>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction asChild><Button onClick={() => signOut()}>Log out</Button></AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </DropdownMenu>
   )
 }
