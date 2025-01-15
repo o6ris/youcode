@@ -10,6 +10,7 @@ export const authOptions: AuthOptions = {
   theme: {
     logo: '/images/logo-text.png',
   },
+  secret: env.AUTH_SECRET,
   providers: [
     GithubProvider({
       clientId: env.GITHUB_ID,
@@ -17,20 +18,26 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
-    session({ session, user }) {
+    async jwt({ token, user }) {
       if (user) {
-        session.user.id = user.id;
-        session.user.image = user.image;
-      } else {
-        session.user = {
-          id: undefined,
-          name: null,
-          email: null,
-          image: null,
-        };
+        token.id = user.id;
+        token.name = user.name;
+        token.email = user.email;
+        token.image = user.image;
       }
+      return token;
+    },
+    async session({ session, token }) {
+      session.user.id = token.sub || undefined;
+      session.user.name = token.name || null;
+      session.user.email = token.email || null;
+      session.user.image = token.picture || null;
+
       return session;
     },
+  },
+  session: {
+    strategy: 'jwt',
   },
 };
 

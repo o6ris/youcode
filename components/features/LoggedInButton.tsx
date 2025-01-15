@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/avatar"
 import { Button } from '../ui/button';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger, AlertDialogFooter } from '../ui/alert-dialog';
+import Link from 'next/link';
 
 interface LoggedInButtonProps {
   user?: Session["user"];
@@ -27,6 +28,9 @@ function LoggedInButton({ user }: LoggedInButtonProps) {
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
+          <DropdownMenuItem>
+            <Link href={"./account"}>Account</Link>
+          </DropdownMenuItem>
           <AlertDialogTrigger>
             <DropdownMenuItem>
               <Button>Log Out</Button>
