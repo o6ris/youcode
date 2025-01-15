@@ -1,22 +1,21 @@
 import React from 'react'
-import { Session } from "next-auth";
+import { getAuthSession } from '@/lib/auth';
+// import { useSession } from 'next-auth/react'
 import LoginButton from './LoginButton';
 import LoggedInButton from '@/components/features/LoggedInButton'
 
-interface AuthButtonProps {
-  user?: Session["user"];
-  status: "authenticated" | "unauthenticated" | "loading";
-}
+const AuthButton = async () => {
 
-function AuthButton({ status, user }: AuthButtonProps) {
+  const session = await getAuthSession()
+  // const { data: session } = useSession()
+  console.log("session", session)
+  const user = session?.user
 
-  if (status === "unauthenticated") {
+  if (!user) {
     return <LoginButton />
-  } else if (status === "loading") {
-    return <p>Loading</p>
-  } else {
-    return <LoggedInButton user={user} />
   }
+  return <LoggedInButton user={user} />
+
 }
 
 export default AuthButton

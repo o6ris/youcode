@@ -1,16 +1,11 @@
-"use client"
-
 import { SiteConfig } from '@/lib/site-config';
 import Link from 'next/link';
 import { ThemeToggle } from '../ThemeToggle';
 import { Typography } from '../ui/Typography';
-import { useSession, signIn, signOut } from "next-auth/react";
 import AuthButton from '@/components/features/AuthButton';
 
 
 export function Header() {
-  const { data: session, status } = useSession()
-  console.log("session", session, status)
 
   return (
     <header className="bg-background sticky top-0 z-40 w-full border-b">
@@ -24,7 +19,8 @@ export function Header() {
 
         <div className="flex flex-1 items-center justify-end space-x-4">
           <nav className="flex items-center space-x-1">
-            <AuthButton status={status} user={session?.user} />
+            {/* @ts-expect-error Async Server Component */}
+            <AuthButton />
             <ThemeToggle />
           </nav>
         </div>
