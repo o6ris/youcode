@@ -5,7 +5,7 @@ import { Session } from "next-auth"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger, AlertDialogFooter, AlertDialogDescription } from '@/components/ui/alert-dialog';
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-
+import useUsers  from "@/modules/client/users"
 
 interface EditUserProps {
   user?: Session['user'],
@@ -14,7 +14,9 @@ interface EditUserProps {
 
 function EditUser({ user, triggerButtonClass }: EditUserProps) {
 
+  const { editUser } = useUsers()
   const [userInfos, setUserInfos] = useState<Session['user'] | undefined>(user);
+
   const userOnChange = (name: keyof Session['user'] | undefined, value?: string) => {
     if (name) {
       const tempUser = { ...userInfos };
@@ -22,6 +24,10 @@ function EditUser({ user, triggerButtonClass }: EditUserProps) {
       setUserInfos(tempUser);
     }
   };
+
+  const resetInfos = () => {
+    setUserInfos(user)
+  }
   console.log("userinfos", userInfos)
   return (
     <AlertDialog>
@@ -41,8 +47,8 @@ function EditUser({ user, triggerButtonClass }: EditUserProps) {
           </div>
         </AlertDialogDescription>
         <AlertDialogFooter className="flex flex-row w-full items-center gap-4">
-          <AlertDialogCancel className="m-0 w-full">Cancel</AlertDialogCancel>
-          <AlertDialogAction className="m-0 w-full">Edit</AlertDialogAction>
+          <AlertDialogCancel onClick={resetInfos} className="m-0 w-full">Cancel</AlertDialogCancel>
+          <AlertDialogAction onClick={()=>editUser(userInfos)} className="m-0 w-full">Edit</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

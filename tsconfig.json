@@ -31,6 +31,9 @@
       ],
       "@/lib": [
         "./lib"
+      ],
+      "@/modules": [
+        "./modules"
       ]
     },
     "resolveJsonModule": true,
